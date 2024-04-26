@@ -47,3 +47,24 @@ class TextCutter(BaseCutter):
         return cls(**({"count_separators": self.count_separators} | config))(
             chunk, max_chunk_length
         )
+
+
+class RegexTextCutter(TextCutter):
+    def __init__(
+        self,
+        regex_separator,
+        count_separators=False,
+        cutter_config=None,
+    ):
+        self.regex_separator = regex_separator
+        self.count_separators = count_separators
+        self.cutter_config = cutter_config or {}
+
+    def cut(self, text):
+        start = 0
+        for match in self.regex_separator.finditer(text):
+            match_start, match_end = match.span()
+            chunk = text[start:match_start]
+            start = match_end
+            yield (chunk, match[0])
+        yield (text[start:], None)

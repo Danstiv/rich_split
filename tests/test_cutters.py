@@ -1,6 +1,9 @@
+import re
+
 from pytest import raises
 
 from rich_split.cutters import TextCutter
+from rich_split.cutters.text_cutter import RegexTextCutter
 from rich_split.exceptions import CutError
 
 
@@ -43,3 +46,14 @@ class TestTextCutter:
         assert cutter(text, 6) == expected_result
         with raises(CutError):
             cutter(text, 5)
+
+
+class TestRegexTextCutter:
+    def test_cutting(self):
+        text = "word1. word2. wo3. w4. wword5."
+        expected_result = (
+            ["word1", "word2", "wo3", "w4", "wword5", ""],
+            [". ", ". ", ". ", ". ", ".", None],
+        )
+        cutter = RegexTextCutter(regex_separator=re.compile(r"\.( |$)"))
+        assert cutter(text, 6) == expected_result

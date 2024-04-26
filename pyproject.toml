@@ -7,11 +7,10 @@ include = [
   "tests",
   "LICENSE",
 ]
-exclude = [".gitignore"]
 
 [project]
 name = "rich_split"
-version = "0.0.1"
+version = "0.1.1"
 authors = [
   { name="Danstiv", email="danstiv@yandex.ru" },
 ]

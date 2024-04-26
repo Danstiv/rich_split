@@ -17,12 +17,12 @@ class BaseSplitter(ABC):
         not_process_if_only_one_part=True,
     ):
         self.max_part_length = max_part_length
-        self.cutter_config = (self.cutter_config or {}) | (cutter_config or {})
+        self.cutter_config = (cutter_config or {}) | (self.cutter_config or {})
         self.cutter_config = copy.deepcopy(self.cutter_config)
-        self.joiner_config = (self.joiner_config or {}) | (joiner_config or {})
+        self.joiner_config = (joiner_config or {}) | (self.joiner_config or {})
         self.joiner_config = copy.deepcopy(self.joiner_config)
-        self.part_header_config = (self.part_header_config or {}) | (
-            part_header_config or {}
+        self.part_header_config = (part_header_config or {}) | (
+            self.part_header_config or {}
         )
         self.part_header_config = copy.deepcopy(self.part_header_config)
         self.not_process_if_only_one_part = not_process_if_only_one_part
